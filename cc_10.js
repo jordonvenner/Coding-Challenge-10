@@ -95,3 +95,49 @@ class Product {
   
   console.log(prod1.getDetails()); 
   // Expected: "Product: Laptop, ID: 101, Price: $1200, Stock: 8" (Stock reduced)
+
+
+
+  //Task 3: Creating an Inventory Class
+
+  // Product Class (Make sure this is included before the Inventory class)
+class Product {
+    constructor(name, id, price, stock) {
+      this.name = name;
+      this.id = id;
+      this.price = price;
+      this.stock = stock;
+    }
+  
+    // Method to return product details
+    getDetails() {
+      return `Product: ${this.name}, ID: ${this.id}, Price: $${this.price}, Stock: ${this.stock}`;
+    }
+  }
+  
+  // Inventory Class
+  class Inventory {
+    constructor() {
+      this.products = []; // Initialize an empty array to store products
+    }
+  
+    // Method to add a product to inventory
+    addProduct(product) {
+      this.products.push(product);
+      console.log(`Added ${product.name} to inventory.`);
+    }
+  
+    // Method to list all products
+    listProducts() {
+      console.log("Inventory List:");
+      this.products.forEach(product => console.log(product.getDetails()));
+    }
+  }
+  
+  // Test Cases
+  const prod1 = new Product("Laptop", 101, 1200, 5); // Create a new product
+  const inventory = new Inventory(); // Create inventory instance
+  
+  inventory.addProduct(prod1); // Add product to inventory
+  inventory.listProducts(); 
+  // Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 5"
