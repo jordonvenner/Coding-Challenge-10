@@ -141,3 +141,98 @@ class Product {
   inventory.addProduct(prod1); // Add product to inventory
   inventory.listProducts(); 
   // Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 5"
+
+
+
+
+//Task 4: Implementing Order Management
+
+  // Product Class
+class Product {
+    constructor(name, id, price, stock) {
+      this.name = name;
+      this.id = id;
+      this.price = price;
+      this.stock = stock;
+    }
+  
+    // Method to return product details
+    getDetails() {
+      return `Product: ${this.name}, ID: ${this.id}, Price: $${this.price}, Stock: ${this.stock}`;
+    }
+  
+    // Method to update stock after purchase
+    updateStock(quantity) {
+      if (quantity > this.stock) {
+        console.log("Not enough stock available!");
+        return false;
+      } else {
+        this.stock -= quantity;
+        return true;
+      }
+    }
+  }
+  
+  // Order Class
+  class Order {
+    constructor(orderId, product, quantity) {
+      this.orderId = orderId;
+      this.product = product;
+      this.quantity = quantity;
+      this.totalPrice = this.quantity * this.product.price;
+    }
+  
+    // Method to return order details
+    getOrderDetails() {
+      return `Order ID: ${this.orderId}, Product: ${this.product.name}, Quantity: ${this.quantity}, Total Price: $${this.totalPrice}`;
+    }
+  }
+  
+  // Inventory Class
+  class Inventory {
+    constructor() {
+      this.products = []; // Array to store products
+      this.orders = [];   // Array to store orders
+    }
+  
+    // Method to add a product to inventory
+    addProduct(product) {
+      this.products.push(product);
+      console.log(`Added ${product.name} to inventory.`);
+    }
+  
+    // Method to list all products
+    listProducts() {
+      console.log("Inventory List:");
+      this.products.forEach(product => console.log(product.getDetails()));
+    }
+  
+    // Method to place an order
+    placeOrder(orderId, product, quantity) {
+      if (product.updateStock(quantity)) {
+        const order = new Order(orderId, product, quantity);
+        this.orders.push(order);
+        console.log(`Order placed: ${order.getOrderDetails()}`);
+      }
+    }
+  
+    // Method to list all orders
+    listOrders() {
+      console.log("Orders List:");
+      this.orders.forEach(order => console.log(order.getOrderDetails()));
+    }
+  }
+  
+  // Test Cases
+  const prod1 = new Product("Laptop", 101, 1200, 5); // Create a product
+  const inventory = new Inventory(); // Create inventory instance
+  
+  inventory.addProduct(prod1); // Add product to inventory
+  inventory.listProducts(); 
+  
+  inventory.placeOrder(601, prod1, 2); // Place an order for 2 laptops
+  inventory.listOrders(); 
+  // Expected output: "Order ID: 601, Product: Laptop, Quantity: 2, Total Price: $2400"
+  
+  console.log(prod1.getDetails()); 
+  // Expected output: "Product: Laptop, ID: 101, Price: $1200, Stock: 3"
